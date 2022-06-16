@@ -6,7 +6,7 @@
 /*   By: jmorillo <jmorillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 17:56:13 by jmorillo          #+#    #+#             */
-/*   Updated: 2022/06/03 17:59:56 by jmorillo         ###   ########.fr       */
+/*   Updated: 2022/06/16 20:29:13 by jmorillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,7 @@
 # include <unistd.h>
 
 char	*get_next_line(int fd);
+char	*ft_strconcat(char const *s1, char const *s2);
+int		has_new_line(char *line);
 
 #endif
