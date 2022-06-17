@@ -6,7 +6,7 @@
 /*   By: jmorillo <jmorillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 17:56:06 by jmorillo          #+#    #+#             */
-/*   Updated: 2022/06/16 20:44:45 by jmorillo         ###   ########.fr       */
+/*   Updated: 2022/06/17 21:30:40 by jmorillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,18 @@ size_t	string_length(char *str)
 	return (count);
 }
 
-char	*extract_string(char *str, size_t pos, size_t length)
+void	copy_string(char *str1, char *str2, size_t pos, size_t length)
 {
-	char	*new_str;
 	size_t	i;
 
-	new_str = malloc(length + 1);
-	if (new_str)
+	if (!str1 || !str2 || !length)
+		return (NULL);
+	i = 0;
+	while (pos + i < length)
 	{
-		i = 0;
-		while (pos + i < length)
-		{
-			new_str[i] = str[pos + i];
-			i++;
-		}
+		str1[i] = str2[pos + i];
+		i++;
 	}
-	return (new_str);
 }
 
 void	merge_strings(char **str1, char **str2)
@@ -59,18 +55,8 @@ void	merge_strings(char **str1, char **str2)
 		new_str = NULL;
 	if (new_str)
 	{
-		i = 0;
-		while (i < str1_len)
-		{
-			new_str[i] = *str1[i];
-			i++;
-		}
-		i = 0;
-		while (i < str2_len)
-		{
-			new_str[i + str1_len] = *str2[i];
-			i++;
-		}
+		copy_string(new_str, *str1, 0, str1_len);
+		copy_string(new_str[str1_len], *str2, 0, str2_len);
 		new_str[str1_len + str2_len] = '\0';
 	}
 	free(*str1);
@@ -99,37 +85,27 @@ int	find_newline(char *str)
 char	*split_string(char **str)
 {
 	char	*new_str;
+	char	*tmp_str;
 	int		newline_pos;
-	int		i;
+	size_t	str_len;
 
 	newline_pos = find_newline(*str);
+	str_len = string_length(str);
 	if (newline_pos >= 0)
 	{
-		new_str = malloc (newline_pos + 1);
-		if (new_str)
-		{
-			i = 0;
-			while (i <= newline_pos)
-			{
-				new_str[i] = *str[i];
-				i++;
-			}
-			i = 0;
-			while (i < str_len)
-			{
-				new_str[i + str1_len] = *str2[i];
-				i++;
-			}
-
-		}
-
+		new_str = malloc(newline_pos + 2);
+		if (!new_str)
+			return (NULL);
+		copy_string(new_str, *str, 0, newline_pos + 1);
+		tmp_str = malloc(str_len - newline_pos);
+		if (!tmp_str)
+			return (NULL);
+		copy_string(tmp_str, *str, newline_pos + 1, str_len - newline_pos - 1);
 	}
 	else
 		new_str = *str;
-
 	new_str[str1_len + str2_len] = '\0';
-	free(*str1);
-	free(*str2);
-	*str1 = new_str;
-	*str2 = NULL;
+	free(*str);
+	*str = tmp_str;
+	return (new_str);
 }
