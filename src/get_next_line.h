@@ -23,5 +23,6 @@
 char	*get_next_line(int fd);
 void	merge_strings(char **str1, char **str2);
 int		find_newline(char *str);
+char	*split_string(char **str);
 
 #endif

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+#include <stddef.h>
 
 size_t	string_length(char *str)
 {
@@ -23,6 +24,24 @@ size_t	string_length(char *str)
 			count++;
 	}
 	return (count);
+}
+
+char	*extract_string(char *str, size_t pos, size_t length)
+{
+	char	*new_str;
+	size_t	i;
+
+	new_str = malloc(length + 1);
+	if (new_str)
+	{
+		i = 0;
+		while (pos + i < length)
+		{
+			new_str[i] = str[pos + i];
+			i++;
+		}
+	}
+	return (new_str);
 }
 
 void	merge_strings(char **str1, char **str2)
@@ -77,7 +96,7 @@ int	find_newline(char *str)
 	return (result);
 }
 
-char	*split_strings(char **str)
+char	*split_string(char **str)
 {
 	char	*new_str;
 	int		newline_pos;

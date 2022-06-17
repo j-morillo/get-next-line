@@ -48,7 +48,7 @@ char	*get_next_line(int fd)
 				return (NULL);
 		}
 	}
-	result = ft_strsplit(cache);
+	result = split_string(&cache);
 	return (result);
 }
 
