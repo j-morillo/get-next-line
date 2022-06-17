@@ -12,23 +12,46 @@
 
 #include "get_next_line.h"
 
+char	*read_until_line(int fd, char *cache);
+
 char	*get_next_line(int fd)
 {
 	int			bytes_read;
-	char		*buffer[BUFFER_SIZE];
-	static char	*line = NULL;
+	char		*buffer;
+	char		*result;
+	static char	*cache = NULL;
 
-	while (!has_new_line(line))
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return (NULL);
+	buffer = (char *) malloc(BUFFER_SIZE + 1);
+	if (!buffer)
 	{
-		bytes_read = read(fd, buffer, BUFFER_SIZE);
-		if (bytes_read < 0)
-			return (NULL);
-		line = ft_strconcat(line, buffer);
-		if (bytes_read == 0 && line == NULL)
-			return (NULL);
+		free(cache);
+		return (NULL);
 	}
-	if (has_new_line(line))
-		return (ft_strsplit(line));
-	else
-		return (line);
+	if (find_newline(cache) < 0)
+	{
+		bytes_read = 1;
+		buffer[0] = 0;
+		while (bytes_read && find_newline(buffer) < 0)
+		{
+			bytes_read = read(fd, buffer, BUFFER_SIZE);
+			if (bytes_read < 0)
+			{
+				free(buffer);
+				free(cache);
+				return (NULL);
+			}
+			buffer[bytes_read] = 0;
+			merge_strings(&cache, &buffer);
+			if (bytes_read == 0 && cache == NULL)
+				return (NULL);
+		}
+	}
+	result = ft_strsplit(cache);
+	return (result);
+}
+
+char	*read_until_line(int fd, char *cache)
+{
 }

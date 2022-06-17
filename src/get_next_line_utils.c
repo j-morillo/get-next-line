@@ -10,61 +10,107 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-size_t	ft_strlen(const char *s)
+#include "get_next_line.h"
+
+size_t	string_length(char *str)
 {
 	size_t	count;
 
 	count = 0;
-	if (!s)
-		return (0);
-	while (s[count])
-		count++;
+	if (str)
+	{
+		while (str[count])
+			count++;
+	}
 	return (count);
 }
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+void	merge_strings(char **str1, char **str2)
 {
-	size_t	i;
+	size_t	str1_len;
+	size_t	str2_len;
+	char	*new_str;
+	int		i;
 
-	if (!dst && !src && n)
-		return (NULL);
-	i = 0;
-	while (i < n)
+	str1_len = string_length(*str1);
+	str2_len = string_length(*str2);
+	if (str1_len + str2_len > 0)
+		new_str = malloc (str1_len + str2_len + 1);
+	else
+		new_str = NULL;
+	if (new_str)
 	{
-		((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
-		i++;
+		i = 0;
+		while (i < str1_len)
+		{
+			new_str[i] = *str1[i];
+			i++;
+		}
+		i = 0;
+		while (i < str2_len)
+		{
+			new_str[i + str1_len] = *str2[i];
+			i++;
+		}
+		new_str[str1_len + str2_len] = '\0';
 	}
-	return (dst);
+	free(*str1);
+	free(*str2);
+	*str1 = new_str;
+	*str2 = NULL;
 }
 
-char	*ft_strconcat(char const *s1, char const *s2)
+int	find_newline(char *str)
 {
-	size_t	s1_len;
-	size_t	s2_len;
-	char	*ptr;
+	size_t	pos;
+	int		result;
 
-	if (!s1 && !s2)
-		return (NULL);
-	s1_len = ft_strlen(s1);
-	s2_len = ft_strlen(s2);
-	ptr = malloc (s1_len + s2_len + 1);
-	if (ptr)
+	result = -1;
+	pos = 0;
+	if (str)
 	{
-		ft_memcpy(ptr, s1, s1_len);
-		ft_memcpy(&ptr[s1_len], s2, s2_len);
-		ptr[s1_len + s2_len] = '\0';
-		if (s1)
-			free(s1);
+		while (str[pos] && str[pos] != 10)
+			pos++;
+		if (str[pos] == 10)
+			result = pos;
 	}
-	return (ptr);
+	return (result);
 }
 
-int	has_new_line(char *line)
+char	*split_strings(char **str)
 {
-	size_t	count;
+	char	*new_str;
+	int		newline_pos;
+	int		i;
 
-	count = 0;
-	while (line[count] && line[count] != 10)
-		count++;
-	return (line[count] != 10);
+	newline_pos = find_newline(*str);
+	if (newline_pos >= 0)
+	{
+		new_str = malloc (newline_pos + 1);
+		if (new_str)
+		{
+			i = 0;
+			while (i <= newline_pos)
+			{
+				new_str[i] = *str[i];
+				i++;
+			}
+			i = 0;
+			while (i < str_len)
+			{
+				new_str[i + str1_len] = *str2[i];
+				i++;
+			}
+
+		}
+
+	}
+	else
+		new_str = *str;
+
+	new_str[str1_len + str2_len] = '\0';
+	free(*str1);
+	free(*str2);
+	*str1 = new_str;
+	*str2 = NULL;
 }

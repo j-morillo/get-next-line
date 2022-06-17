@@ -16,8 +16,12 @@
 # include <stdlib.h>
 # include <unistd.h>
 
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1024
+# endif
+
 char	*get_next_line(int fd);
-char	*ft_strconcat(char const *s1, char const *s2);
-int		has_new_line(char *line);
+void	merge_strings(char **str1, char **str2);
+int		find_newline(char *str);
 
 #endif
