@@ -6,12 +6,11 @@
 /*   By: jmorillo <jmorillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 17:56:06 by jmorillo          #+#    #+#             */
-/*   Updated: 2022/06/17 21:30:40 by jmorillo         ###   ########.fr       */
+/*   Updated: 2022/06/18 14:58:48 by jmorillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stddef.h>
 
 size_t	string_length(char *str)
 {
@@ -31,7 +30,7 @@ void	copy_string(char *str1, char *str2, size_t pos, size_t length)
 	size_t	i;
 
 	if (!str1 || !str2 || !length)
-		return (NULL);
+		return ;
 	i = 0;
 	while (pos + i < length)
 	{
