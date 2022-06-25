@@ -6,7 +6,7 @@
 /*   By: jamd <jamd@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 17:56:06 by jmorillo          #+#    #+#             */
-/*   Updated: 2022/06/23 17:30:14 by jamd             ###   ########.fr       */
+/*   Updated: 2022/06/25 21:15:19 by jamd             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ size_t	string_length(char *str)
 	return (count);
 }
 
-void	copy_string(char *str1, char *str2, size_t pos, size_t length)
+void	copy_memory(char *str1, char *str2, size_t length)
 {
 	size_t	i;
 
 	if (!str1 || !str2 || !length)
 		return ;
 	i = 0;
-	while (pos + i < length)
+	while (i < length)
 	{
-		str1[i] = str2[pos + i];
+		str1[i] = str2[i];
 		i++;
 	}
 }
@@ -53,9 +53,9 @@ void	merge_strings(char **str1, char **str2)
 		new_str = NULL;
 	if (new_str)
 	{
-		copy_string(new_str, *str1, 0, str1_len);
-		copy_string(&new_str[str1_len], *str2, 0, str2_len);
-		new_str[str1_len + str2_len] = '\0';
+		copy_memory(new_str, *str1, str1_len);
+		copy_memory(new_str + str1_len, *str2, str2_len);
+		new_str[str1_len + str2_len] = 0;
 	}
 	free(*str1);
 	free(*str2);
@@ -95,11 +95,11 @@ char	*split_string(char **str)
 		new_str = malloc(newline_pos + 2);
 		if (!new_str)
 			return (NULL);
-		copy_string(new_str, *str, 0, newline_pos + 1);
+		copy_memory(new_str, *str, newline_pos + 1);
 		tmp_str = malloc(str_len - newline_pos);
 		if (!tmp_str)
 			return (NULL);
-		copy_string(tmp_str, *str, newline_pos + 1, str_len - newline_pos - 1);
+		copy_memory(tmp_str, *str + newline_pos + 1, str_len - newline_pos - 1);
 	}
 	else
 		new_str = *str;
