@@ -21,6 +21,7 @@
 # endif
 
 char	*get_next_line(int fd);
+size_t	string_length(char *str);
 void	merge_strings(char **str1, char **str2);
 int		find_newline(char *str);
 char	*split_string(char **str);

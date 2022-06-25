@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-char	*read_until_line(int fd, char *cache);
+char	*init_buffer(void);
 
 char	*get_next_line(int fd)
 {
@@ -23,20 +23,16 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buffer = (char *) malloc(BUFFER_SIZE + 1);
-	if (!buffer)
-	{
-		free(cache);
-		return (NULL);
-	}
 	if (find_newline(cache) < 0)
 	{
+		buffer = init_buffer();
+		if (!buffer)
+			return (NULL);
 		bytes_read = 1;
-		buffer[0] = 0;
 		while (bytes_read && find_newline(buffer) < 0)
 		{
 			bytes_read = read(fd, buffer, BUFFER_SIZE);
-			if (bytes_read < 0)
+			if (bytes_read < 0 || (!bytes_read && !string_length(cache)))
 			{
 				free(buffer);
 				free(cache);
@@ -44,14 +40,26 @@ char	*get_next_line(int fd)
 			}
 			buffer[bytes_read] = 0;
 			merge_strings(&cache, &buffer);
-			if (bytes_read == 0 && cache == NULL)
-				return (NULL);
 		}
 	}
 	result = split_string(&cache);
 	return (result);
 }
 
-char	*read_until_line(int fd, char *cache)
+char	*init_buffer(void)
 {
+	char	*buffer;
+	int		i;
+
+	buffer = (char *) malloc(BUFFER_SIZE + 1);
+	if (buffer)
+	{
+		i = 0;
+		while (i <= BUFFER_SIZE)
+		{
+			buffer[i] = 0;
+			i++;
+		}
+	}
+	return (buffer);
 }
