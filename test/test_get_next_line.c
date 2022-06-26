@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_get_next_line.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jamd <jamd@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmorillo <jmorillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 21:09:12 by jamd              #+#    #+#             */
-/*   Updated: 2022/06/25 21:10:08 by jamd             ###   ########.fr       */
+/*   Updated: 2022/06/26 14:08:57 by jmorillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,11 @@ void	test_get_next_line(void)
 	if (fd > 0)
 	{
 		line = get_next_line(fd);
-		printf(line);
+		while (line)
+		{
+			printf("%s", line);
+			line = get_next_line(fd);
+		}
 		close (fd);
 	}
 }

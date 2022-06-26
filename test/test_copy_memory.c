@@ -3,44 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   test_copy_memory.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jamd <jamd@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmorillo <jmorillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 19:45:44 by jamd              #+#    #+#             */
-/*   Updated: 2022/06/25 21:40:22 by jamd             ###   ########.fr       */
+/*   Updated: 2022/06/26 12:50:12 by jmorillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.h"
 
-void	assert_equal(char *str1, char *str2, size_t len, char *expected)
+static void	assert_equal(char *str1, char *str2, size_t len, char *expected)
 {
 	char	*string1;
-	char	*string2;
-	char	*ok;
-	size_t	i;
 
-	if (!str1)
-		string1 = GREY_NULL;
-	else
-		string1 = alloc_string(str1);
-	if (!str2)
-		string2 = GREY_NULL;
-	else
-		string2 = alloc_string(str2);
-	copy_memory(string1, string2, len);
-	i = 0;
-	while (i < len && string1[i] == expected[i])
-		i++;
-	if (i == len)
-		ok = GREEN_CHECK;
-	else
-		ok = RED_CROSS;
-	printf("  [%s + %s] --> %s [%s]  %s\n", str1, str2, string1, string2, ok);
+	string1 = alloc_string(str1);
+	copy_memory(string1, str2, len);
+	printf("  ");
+	print_fstring(str1);
+	printf(" + ");
+	print_fstring(str2);
+	printf("[%zu] %s ", len, ARROW);
+	print_fstring(string1);
+	printf(" (");
+	print_fstring(expected);
+	printf(") ");
+	print_ok(are_strings_equal(string1, expected));
+	print_newline();
 	free(string1);
-	free(string2);
 }
 
 void	test_copy_memory(void)
 {
-	assert_equal("1234", "NULL", 2, "NU");
+	assert_equal("1234", "5678", 0, "1234");
+	assert_equal("1234", "5678", 2, "5634");
+	assert_equal("1234", "5678", 4, "5678");
+	assert_equal("1234", "5678", 6, "5678");
+	assert_equal("1234", "56", 2, "5634");
+	assert_equal("1234", NULL, 0, "1234");
+	assert_equal("1234", NULL, 2, "1234");
+	assert_equal(NULL, "5678", 2, NULL);
 }

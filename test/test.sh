@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TITLE="\033[34;1;43m"
+TITLE="\033[34;43m"
 RESET="\033[0m"
 SRC_DIR="../src/"
 DIRECTORY="../"
@@ -12,7 +12,7 @@ echo -e "${TITLE}NORMINETTE${RESET}"
 norminette ${DIRECTORY}get_next_line*
 echo 
 echo -e "${TITLE}GCC${RESET}"
-gcc -Wall -Werror -Wextra -I ${DIRECTORY} test*.c ${DIRECTORY}get_next_line.c ${DIRECTORY}get_next_line_utils.c
+gcc -Wall -Werror -Wextra -D BUFFER_SIZE=42 -I ${DIRECTORY} test*.c ${DIRECTORY}get_next_line.c ${DIRECTORY}get_next_line_utils.c
 echo 
 echo -e "${TITLE}TEST${RESET}"
 ./a.out

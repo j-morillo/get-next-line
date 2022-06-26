@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jamd <jamd@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmorillo <jmorillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 17:56:06 by jmorillo          #+#    #+#             */
-/*   Updated: 2022/06/25 21:15:19 by jamd             ###   ########.fr       */
+/*   Updated: 2022/06/26 15:08:52 by jmorillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ void	copy_memory(char *str1, char *str2, size_t length)
 
 	if (!str1 || !str2 || !length)
 		return ;
+	i = string_length(str2);
+	if (i < length)
+		length = i;
 	i = 0;
 	while (i < length)
 	{
@@ -58,9 +61,9 @@ void	merge_strings(char **str1, char **str2)
 		new_str[str1_len + str2_len] = 0;
 	}
 	free(*str1);
-	free(*str2);
 	*str1 = new_str;
-	*str2 = NULL;
+	if (str2_len)
+		**str2 = 0;
 }
 
 int	find_newline(char *str)
@@ -78,33 +81,4 @@ int	find_newline(char *str)
 			result = pos;
 	}
 	return (result);
-}
-
-char	*split_string(char **str)
-{
-	char	*new_str;
-	char	*tmp_str;
-	int		newline_pos;
-	size_t	str_len;
-
-	newline_pos = find_newline(*str);
-	str_len = string_length(*str);
-	tmp_str = NULL;
-	if (newline_pos >= 0)
-	{
-		new_str = malloc(newline_pos + 2);
-		if (!new_str)
-			return (NULL);
-		copy_memory(new_str, *str, newline_pos + 1);
-		tmp_str = malloc(str_len - newline_pos);
-		if (!tmp_str)
-			return (NULL);
-		copy_memory(tmp_str, *str + newline_pos + 1, str_len - newline_pos - 1);
-	}
-	else
-		new_str = *str;
-	new_str[newline_pos + 1] = 0;
-	free(*str);
-	*str = tmp_str;
-	return (new_str);
 }

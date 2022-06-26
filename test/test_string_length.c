@@ -3,20 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   test_string_length.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jamd <jamd@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: jmorillo <jmorillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 19:44:03 by jamd              #+#    #+#             */
-/*   Updated: 2022/06/25 19:44:59 by jamd             ###   ########.fr       */
+/*   Updated: 2022/06/26 12:51:18 by jmorillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.h"
 
+static void	assert_equal(char *text, size_t expected)
+{
+	size_t	length;
+
+	length = string_length(text);
+	printf("  ");
+	print_fstring(text);
+	printf(" %s %zu ", ARROW, length);
+	print_ok(length == expected);
+	print_newline();
+}
+
 void	test_string_length(void)
 {
-	printf("  > %s => %zu\n", GREY_NULL, string_length(NULL));
-	printf("  > '' => %zu\n", string_length(""));
-	printf("  > '1' => %zu\n", string_length("1"));
-	printf("  > 'NULL' => %zu\n", string_length("NULL"));
-	printf("  > ' 12345 \\n' => %zu\n", string_length(" 12345 \n"));
+	assert_equal(NULL, 0);
+	assert_equal("", 0);
+	assert_equal("1", 1);
+	assert_equal("1234", 4);
+	assert_equal(" 12345 \t", 8);
 }
