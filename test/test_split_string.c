@@ -6,7 +6,7 @@
 /*   By: jmorillo <jmorillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 12:15:44 by jmorillo          #+#    #+#             */
-/*   Updated: 2022/06/26 13:34:02 by jmorillo         ###   ########.fr       */
+/*   Updated: 2022/06/26 19:00:17 by jmorillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ void	test_split_string(void)
 	assert_equal("1\n", "1\n", NULL);
 	assert_equal("1\n1", "1\n", "1");
 	assert_equal("\n1", "\n", "1");
+	assert_equal("foo\nbar", "foo\n", "bar");
 	assert_equal("foo\nbar\n", "foo\n", "bar\n");
 }

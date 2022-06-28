@@ -5,20 +5,21 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmorillo <jmorillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/25 21:09:12 by jamd              #+#    #+#             */
-/*   Updated: 2022/06/26 14:08:57 by jmorillo         ###   ########.fr       */
+/*   Created: 2022/06/25 21:09:12 by jmorillo          #+#    #+#             */
+/*   Updated: 2022/06/26 19:00:05 by jmorillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.h"
 
-void	test_get_next_line(void)
+static void	print_file(char *filename)
 {
 	int		fd;
 	char	*line;
 
-	fd = open("test.sh", O_RDONLY);
-	if (fd > 0)
+	printf("  %sfile%s %s\n", SUBTITLE_COLOR, RESET_COLOR, filename);
+	fd = open(filename, O_RDONLY);
+	if (fd >= 0)
 	{
 		line = get_next_line(fd);
 		while (line)
@@ -28,4 +29,15 @@ void	test_get_next_line(void)
 		}
 		close (fd);
 	}
+	else
+	{
+		printf("  %s Error al abrir fichero\n", RED_CROSS);
+	}	
+}
+
+void	test_get_next_line(void)
+{
+	print_file("test.sh");
+	print_file("text_file_1.txt");
+	print_file("non_exists_file");
 }

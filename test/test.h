@@ -6,7 +6,7 @@
 /*   By: jmorillo <jmorillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 10:54:07 by jmorillo          #+#    #+#             */
-/*   Updated: 2022/06/26 13:50:51 by jmorillo         ###   ########.fr       */
+/*   Updated: 2022/06/26 19:00:34 by jmorillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 
 # define TITLE_COLOR "\e[30;46m"
+# define SUBTITLE_COLOR "\e[31;44m"
 # define RESET_COLOR "\e[0m"
 # define GREEN "\e[1;32m"
 # define BLUE "\e[1;34m"

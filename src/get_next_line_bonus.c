@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jmorillo <jmorillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/03 17:52:49 by jmorillo          #+#    #+#             */
-/*   Updated: 2022/06/26 18:59:28 by jmorillo         ###   ########.fr       */
+/*   Updated: 2022/06/26 19:03:34 by jmorillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void	init_buffer(char **buffer);
 void	read_until_line(int fd, char **cache, char *buffer);
@@ -19,19 +19,19 @@ char	*split_string(char **str);
 char	*get_next_line(int fd)
 {
 	char		*buffer;
-	static char	*cache = NULL;
+	static char	*cache[FD_MAX];
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || fd >= FD_MAX || BUFFER_SIZE <= 0)
 		return (NULL);
-	if (find_newline(cache) < 0)
+	if (find_newline(cache[fd]) < 0)
 	{
 		init_buffer(&buffer);
 		if (!buffer)
 			return (NULL);
-		read_until_line(fd, &cache, buffer);
+		read_until_line(fd, &cache[fd], buffer);
 		free(buffer);
 	}
-	return (split_string(&cache));
+	return (split_string(&cache[fd]));
 }
 
 void	init_buffer(char **buffer)
