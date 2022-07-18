@@ -6,13 +6,14 @@
 /*   By: jmorillo <jmorillo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/25 21:09:09 by jmorillo          #+#    #+#             */
-/*   Updated: 2022/06/26 19:00:12 by jmorillo         ###   ########.fr       */
+/*   Updated: 2022/06/28 11:04:06 by jmorillo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "test.h"
 
-static void	assert_equal(char *str1, char *str2, char *expected1, char *expected2)
+static void	assert_equal(char *str1, char *str2, char *expected1,
+	char *expected2)
 {
 	char	*string1;
 	char	*string2;
